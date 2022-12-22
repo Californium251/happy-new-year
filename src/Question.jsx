@@ -7,7 +7,7 @@ export default class Question extends React.Component {
     super(props);
     this.state = {
       state: 'not started',
-      currentQuestion: 0,
+      currentQuestion: null,
       questions: [
         'КАКОЕ ТВОЁ РЕШЕНИЕ БЫЛО САМЫМ ЗНАЧИМЫМ В ЭТОМ ГОДУ?',
         'КАКОЙ ПОЛЕЗНОЙ ПРИВЫЧКОЙ ТЫ ОБЗАВЁЛСЯ В ЭТОМ ГОДУ?',
@@ -46,7 +46,10 @@ export default class Question extends React.Component {
     }
   }
   startGame = () => {
-    this.setState({ state: 'started' });
+    this.setState({
+      state: 'started',
+      currentQuestion: Math.floor(Math.random() * this.state.questions.length)
+    });
   }
   nextQuestion = () => {
     const { questions, currentQuestion } = this.state;
