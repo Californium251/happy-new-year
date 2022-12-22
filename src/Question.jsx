@@ -1,10 +1,12 @@
 import React from "react";
 import Button from "./Button";
+import End from "./End";
 
 export default class Question extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      state: 'not started',
       currentQuestion: 0,
       questions: [
         'КАКОЕ ТВОЁ РЕШЕНИЕ БЫЛО САМЫМ ЗНАЧИМЫМ В ЭТОМ ГОДУ?',
@@ -43,19 +45,32 @@ export default class Question extends React.Component {
       ],
     }
   }
+  startGame = () => {
+    this.setState({ state: 'started' });
+  }
   nextQuestion = () => {
     const { questions, currentQuestion } = this.state;
     const newQuestions = questions.filter((question, index) => index !== currentQuestion);
-    this.setState({
-      questions: [...newQuestions],
-      currentQuestion: Math.floor(Math.random() * this.state.questions.length)
-    });
+    if (newQuestions.length > 0) {
+      this.setState({
+        questions: [...newQuestions],
+        currentQuestion: Math.floor(Math.random() * this.state.questions.length)
+      });
+    } else {
+      this.setState({ state: 'ended' });
+    }
   }
   render () {
     return (
       <div className="questionBox">
-        <span className="question">{this.state.questions[this.state.currentQuestion]}</span>
-        <Button nextQuestion={this.nextQuestion} />
+        {this.state.state === 'not started'
+        ? <button onClick={this.startGame} className="button" style={{ width: '500px' }}>Начнём!</button>
+        : this.state.state === 'started'
+          ? <>
+              <span className="question">{this.state.questions[this.state.currentQuestion]}</span>
+              <Button nextQuestion={this.nextQuestion} />
+            </>
+          : <End />}
       </div>
     )
   }
