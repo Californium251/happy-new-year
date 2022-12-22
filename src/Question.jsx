@@ -48,7 +48,7 @@ export default class Question extends React.Component {
   startGame = () => {
     this.setState({
       state: 'started',
-      currentQuestion: Math.floor(Math.random() * this.state.questions.length)
+      currentQuestion: Math.floor(Math.random() * (this.state.questions.length - 1))
     });
   }
   nextQuestion = () => {
@@ -57,7 +57,7 @@ export default class Question extends React.Component {
     if (newQuestions.length > 0) {
       this.setState({
         questions: [...newQuestions],
-        currentQuestion: Math.floor(Math.random() * this.state.questions.length)
+        currentQuestion: Math.floor(Math.random() * (this.state.questions.length - 1))
       });
     } else {
       this.setState({ state: 'ended' });
