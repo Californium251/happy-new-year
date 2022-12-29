@@ -64,12 +64,14 @@ export default class Question extends React.Component {
     }
   }
   render () {
+    const author = 'Вопросы придумала Ася @asyawithpencil'.toUpperCase();
     return (
       <div className="questionBox">
         {this.state.state === 'not started'
         ? <button onClick={this.startGame} className="button" style={{ width: '500px' }}>Начнём!</button>
         : this.state.state === 'started'
           ? <>
+              <span className="author">{author}</span>
               <span className="question">{this.state.questions[this.state.currentQuestion]}</span>
               <Button nextQuestion={this.nextQuestion} />
             </>
